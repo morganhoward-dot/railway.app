@@ -34,7 +34,7 @@ async function getEmails(dealId) {
 }
 
 async function getFiles(dealId) {
-  const res = await api.get('/files', { params: { deal_id: dealId, limit: 100 } });
+  const res = await api.get(`/deals/${dealId}/files`);
   return res.data.data || [];
 }
 
