@@ -112,8 +112,9 @@ app.post('/webhook', async (req, res) => {
 console.log('Webhook received:', JSON.stringify(event, null, 2));
     // Only process deals marked as won
     if (
-      event.meta?.object !== 'deal' ||
-      event.current?.status !== 'won'
+      event.meta?.entity !== 'deal' ||
+      event.data?.status !== 'won'
+      
     ) {
       return res.sendStatus(200);
     }
