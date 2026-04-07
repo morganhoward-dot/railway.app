@@ -140,9 +140,10 @@ async function processWebhook(event) {
   for (const email of emails) {
   let emailBody = email.data.snippet || '';
   try {
-    const bodyRes = await api.get(`/mailMessages/${email.data.id}/body`);
-    emailBody = bodyRes.data.data?.body || email.data.snippet || '';
+    const bodyRes = await axios.get(`https://app.pipedrive.com/api/v1/mailMessages/${email.data.id}?api_token=${PIPEDRIVE_API_TOKEN}`);
+    emailBody = bodyRes.data.data?.body || bodyRes.data.data?.body_html || email.data.snippet || '';
   } catch (e) {
+    console.log('Body fetch error:', e.message);
     emailBody = email.data.snippet || '';
   }
   await createActivity(instudyDealId, {
