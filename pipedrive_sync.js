@@ -84,9 +84,10 @@ async function copyFile(file, newDealId) {
     if (!file.file_name || file.file_name.includes('?s=')) return;
     
     // Download the file
-    const fileRes = await axios.get(file.url + '?api_token=' + PIPEDRIVE_API_TOKEN, {
-      responseType: 'arraybuffer',
-      params: { api_token: PIPEDRIVE_API_TOKEN }
+    const fileRes = await api.get(`/files/${file.id}/download`, {
+  responseType: 'arraybuffer',
+  maxRedirects: 5
+});
     });
 
     // Upload to new deal
