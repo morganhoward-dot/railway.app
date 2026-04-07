@@ -137,14 +137,20 @@ async function processWebhook(event) {
 
     const emails = await getEmails(dealId);
     console.log(`Copying ${emails.length} emails...`);
-   for (const email of emails) {
-      console.log('Email object:', JSON.stringify(email));
-      await createActivity(instudyDealId, {
-        subject: email.data.subject || 'Email',
-        type: 'email',
-        note: email.data.snippet || ''
-      });
-    }
+  for (const email of emails) {
+  let emailBody = email.data.snippet || '';
+  try {
+    const bodyRes = await api.get(`/mailMessages/${email.data.id}/body`);
+    emailBody = bodyRes.data.data?.body || email.data.snippet || '';
+  } catch (e) {
+    emailBody = email.data.snippet || '';
+  }
+  await createActivity(instudyDealId, {
+    subject: email.data.subject || 'Email',
+    type: 'email',
+    note: emailBody
+  });
+}
 
     const files = await getFiles(dealId);
     console.log(`Copying ${files.length} files...`);
