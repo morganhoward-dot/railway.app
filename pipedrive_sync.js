@@ -108,8 +108,8 @@ async function copyFile(file, newDealId) {
 // Main webhook handler
 app.post('/webhook', async (req, res) => {
   try {
-    const event = req.body;
-
+  const event = req.body;
+console.log('Webhook received:', JSON.stringify(event, null, 2));
     // Only process deals marked as won
     if (
       event.meta?.object !== 'deal' ||
