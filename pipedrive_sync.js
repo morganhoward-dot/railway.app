@@ -80,8 +80,11 @@ async function createActivity(dealId, activity) {
 // Helper: copy a file to a new deal
 async function copyFile(file, newDealId) {
   try {
+    // Skip avatar/gravatar images
+    if (!file.file_name || file.file_name.includes('?s=')) return;
+    
     // Download the file
-    const fileRes = await axios.get(file.url, {
+    const fileRes = await axios.get(file.url + '?api_token=' + PIPEDRIVE_API_TOKEN, {
       responseType: 'arraybuffer',
       params: { api_token: PIPEDRIVE_API_TOKEN }
     });
