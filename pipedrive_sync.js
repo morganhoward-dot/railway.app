@@ -19,7 +19,7 @@ const api = axios.create({
   baseURL: BASE_URL,
   params: { api_token: PIPEDRIVE_API_TOKEN }
 });
-
+const processedDeals = new Set();
 // Helper: get all notes for a deal
 async function getNotes(dealId) {
   const res = await api.get('/notes', { params: { deal_id: dealId, limit: 100 } });
@@ -129,6 +129,11 @@ async function processWebhook(event) {
 
     const deal = event.data;
     const dealId = deal.id;
+    if (processedDeals.has(dealId)) {
+  console.log(`Already processed deal ${dealId}, skipping`);
+  return;
+}
+processedDeals.add(dealId);
     const dealTitle = deal.title;
 
     console.log(`Processing won deal: ${dealTitle} (ID: ${dealId})`);
