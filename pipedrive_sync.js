@@ -118,7 +118,7 @@ console.log('Webhook received:', JSON.stringify(event, null, 2));
       return res.sendStatus(200);
     }
 
-    const deal = event.current;
+    const deal = event.data;
     const dealId = deal.id;
     const dealTitle = deal.title;
 
