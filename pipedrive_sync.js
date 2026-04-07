@@ -138,6 +138,7 @@ async function processWebhook(event) {
     const emails = await getEmails(dealId);
     console.log(`Copying ${emails.length} emails...`);
     for (const email of emails) {
+      console.log('Email object:', JSON.stringify(email));
       await createActivity(instudyDealId, {
         subject: email.subject || 'Email',
         type: 'email',
