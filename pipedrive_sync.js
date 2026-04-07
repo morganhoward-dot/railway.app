@@ -124,6 +124,7 @@ console.log('Webhook received:', JSON.stringify(event, null, 2));
     const dealTitle = deal.title;
 
     console.log(`Processing won deal: ${dealTitle} (ID: ${dealId})`);
+    await new Promise(resolve => setTimeout(resolve, 5000));
 
     // Find the Instudy duplicate
     const instudyDeal = await findInstudyDeal(dealTitle);
