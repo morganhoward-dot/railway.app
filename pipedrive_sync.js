@@ -65,7 +65,7 @@ async function createActivity(dealId, activity) {
 async function copyFile(file, newDealId) {
   try {
     if (!file.file_name || file.file_name.includes('?s=')) return;
-
+console.log(`Attempting to download file: ${file.file_name}, ID: ${file.id}, URL: ${file.url}`);
     const fileRes = await api.get(`/files/${file.id}/download`, {
       responseType: 'arraybuffer',
       maxRedirects: 5
