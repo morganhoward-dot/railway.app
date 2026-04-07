@@ -47,17 +47,17 @@ async function getFiles(dealId) {
 // Helper: find the Instudy deal by title
 async function findInstudyDeal(originalTitle) {
   const searchTitle = `${originalTitle}-In study`;
-  const res = await api.get('/deals/search', {
+ const res = await api.get('/deals/search', {
     params: {
       term: searchTitle,
       fields: 'title',
       exact_match: true,
-      pipeline_id: INSTUDY_PIPELINE_ID,
-      limit: 1
+      limit: 10
     }
   });
   const items = res.data.data?.items || [];
-  return items.length > 0 ? items[0].item : null;
+  const match = items.find(i => i.item.pipeline_id === INSTUDY_PIPELINE_ID);
+  return match ? match.item : null;
 }
 
 // Helper: create a note on a deal
