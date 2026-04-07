@@ -64,7 +64,7 @@ async function createActivity(dealId, activity) {
 
 async function copyFile(file, newDealId) {
   try {
-    if (!file.file_name || file.file_name.includes('?s=')) return;
+   if (!file.file_name || file.file_name.includes('?s=') || !file.deal_id) return;
 console.log('File object:', JSON.stringify(file));
 const fileRes = await axios.get(file.remote_url || `https://app.pipedrive.com/api/v1/files/${file.id}/download?api_token=${PIPEDRIVE_API_TOKEN}`, {
   responseType: 'arraybuffer',
