@@ -117,7 +117,8 @@ console.log('Webhook received:', JSON.stringify(event, null, 2));
     // Only process deals marked as won
     if (
       event.meta?.entity !== 'deal' ||
-      event.data?.status !== 'won' 
+      event.data?.status !== 'won'
+      event.previous?.status === 'won'
     ) {
       return res.sendStatus(200);
     }
