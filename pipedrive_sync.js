@@ -57,7 +57,7 @@ async function findInstudyDeal(originalTitle) {
   });
   const items = res.data.data?.items || [];
   console.log('Search results:', JSON.stringify(res.data, null, 2));
-  const match = items.find(i => i.item.pipeline_id === INSTUDY_PIPELINE_ID);
+  const match = items.find(i => i.item.pipeline.id === INSTUDY_PIPELINE_ID);
   return match ? match.item : null;
 }
 
