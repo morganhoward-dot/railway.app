@@ -174,7 +174,9 @@ console.log('Webhook received:', JSON.stringify(event, null, 2));
     res.sendStatus(500);
   }
 });
-
+app.get('/test', (req, res) => {
+  res.send('Server is working!');
+});
 app.listen(PORT, () => {
   console.log(`Pipedrive sync server running on port ${PORT}`);
 });
