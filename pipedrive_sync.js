@@ -135,24 +135,6 @@ async function processWebhook(event) {
       await createActivity(instudyDealId, activity);
     }
 
-    const emails = await getEmails(dealId);
-    console.log(`Copying ${emails.length} emails...`);
-  for (const email of emails) {
-  let emailBody = email.data.snippet || '';
-  try {
-    const bodyRes = await axios.get(`https://app.pipedrive.com/api/v1/mailThreads/${email.data.mail_thread_id}/mailMessages?api_token=${PIPEDRIVE_API_TOKEN}`);
-emailBody = bodyRes.data.data?.[0]?.body || email.data.snippet || '';
-  } catch (e) {
-    console.log('Body fetch error:', e.message);
-    emailBody = email.data.snippet || '';
-  }
-  await createActivity(instudyDealId, {
-    subject: email.data.subject || 'Email',
-    type: 'email',
-    note: emailBody
-  });
-}
-
     const files = await getFiles(dealId);
     console.log(`Copying ${files.length} files...`);
     for (const file of files) {
